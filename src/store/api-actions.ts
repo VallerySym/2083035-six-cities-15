@@ -24,45 +24,31 @@ import { UserLogIn } from '../types/user';
 import { Reviews } from '../types/reviews';
 import { Comments } from '../types/comments';
 
-export const fetchOffersAction = createAsyncThunk<void, undefined, {
+export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchOffers',
-  async (_arg, { dispatch, extra: api }) => {
-    dispatch(setOffersIsLoading(true));
-
+  async (_arg, { extra: api }) => {
     const { data } = await api.get<Offers>(ApiRoute.Offers);
-    dispatch(setOffersIsLoading(false));
-    dispatch(loadOffers(data));
-    dispatch(getOffers());
+
+    return data;
   },
 );
 
-export const fetchOfferAction = createAsyncThunk<void, number | string | undefined,
+export const fetchOfferAction = createAsyncThunk<Offer, number | string | undefined,
   {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }>(
     'data/fetchOffer',
-    async (_arg, { dispatch, extra: api }) => {
-      dispatch(setOfferIsLoading(true));
-      dispatch(setOfferIsNotFound(false));
+    async (_arg, { extra: api }) => {
       const id = _arg;
+      const { data } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
 
-      try {
-        const { data } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
-
-        if (data) {
-          dispatch(loadOffer(data));
-        }
-      } catch {
-        dispatch(setOfferIsNotFound(true));
-      } finally {
-        dispatch(setOfferIsLoading(false));
-      }
+      return data;
     },
   );
 

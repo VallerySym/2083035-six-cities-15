@@ -4,9 +4,10 @@ import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import Map from '../../components/map/map.tsx';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
-import LocationsList from '../../components/locations-list/locations-list.tsx';
-import Sort from '../../components/sort/sort.tsx';
-import NavList from '../../components/nav-list/nav-list.tsx';
+import LocationsList from '../../components/locations-list/locations-list';
+import Sort from '../../components/sort/sort';
+import NavList from '../../components/nav-list/nav-list';
+import {getCityActive, getCity, getOffers, getOffersIsLoading, getOffersIsNotFound} from '../../store/offers-process/offers-process.selectors';
 
 type MainPageProps = {
   citiesList: string[];
@@ -14,11 +15,10 @@ type MainPageProps = {
 
 function MainPage({ citiesList }: MainPageProps): JSX.Element {
   const [cardHoverId, setCardHoverId] = useState<string | null>(null);
-  const cityActive = useAppSelector((state) => state.cityActive);
-  const offersActive = useAppSelector((state) => state.offers);
-  const cityMapActive = useAppSelector((state) => state.city);
-  const filteredOffersByCity = offersActive.filter((offer) => offer.city.name === cityActive);
-  const placesCount = filteredOffersByCity.length;
+  const cityActive = useAppSelector(getCityActive);
+  const offersActive = useAppSelector(getOffers);
+  const cityMapActive = useAppSelector(getCity);
+  const placesCount = offersActive.length;
 
   return (
     <div className="page page--gray page--main">
@@ -45,11 +45,11 @@ function MainPage({ citiesList }: MainPageProps): JSX.Element {
               <b className="places__found">{placesCount} places to stay in {cityActive}</b>
               <Sort />
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCardList offerList={filteredOffersByCity} setCardHoverId={setCardHoverId} />
+                <PlaceCardList offerList={offersActive} setCardHoverId={setCardHoverId} />
               </div>
             </section>
             <div className="cities__right-section">
-              <Map mapType={'cities'} offers={filteredOffersByCity} cardHoverId={cardHoverId} city={cityMapActive} />
+              {/* <Map mapType={'cities'} offers={offersActive} cardHoverId={cardHoverId} city={cityMapActive} /> */}
             </div>
           </div>
         </div>

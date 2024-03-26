@@ -46,7 +46,7 @@ function Map({ mapType, city, offers, cardHoverId }: MapProps) {
 
   useEffect(() => {
     if (map) {
-      map.setView([city.lat, city.lng], city.zoom);
+      map.setView([city.latitude, city.longitude], city.zoom);
     }
   }, [map, city]);
 

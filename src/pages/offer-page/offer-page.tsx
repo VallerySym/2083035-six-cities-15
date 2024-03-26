@@ -11,6 +11,8 @@ import Spinner from '../../components/spinner/spinner';
 import { store } from '../../store';
 import { fetchOfferAction, fetchReviewsAction, fetchNearOffersAction } from '../../store/api-actions';
 import { AppRoute } from '../../const';
+import { getCity } from '../../store/offers-process/offers-process.selectors';
+import { getOffer, getOfferIsLoading, getOfferIsNotFound } from '../../store/offer-process/offer-process.selectors';
 
 const MIN_NEAR_OFFERS_COUNT = 0;
 const MAX_NEAR_OFFERS_COUNT = 3;
@@ -18,18 +20,18 @@ const MAX_NEAR_OFFERS_COUNT = 3;
 function OfferPage(): JSX.Element {
   const params = useParams();
   const offerId = params.id;
-  const cityMapActive = useAppSelector((state) => state.city);
+  const cityMapActive = useAppSelector(getCity);
 
-  const selectedOffer = useAppSelector((state) => state.offer);
-  const offerIsLoading = useAppSelector((state) => state.offersIsLoading);
-  const offerIsNotFound = useAppSelector((state) => state.offerIsNotFound);
+  const selectedOffer = useAppSelector(getOffer);
+  const offerIsLoading = useAppSelector(getOfferIsLoading);
+  const offerIsNotFound = useAppSelector(getOfferIsNotFound);
   const reviewsActive = useAppSelector((state) => state.reviews);
   const nearOffers = useAppSelector((state) => state.nearOffers);
   const nearOffersIsLoading = useAppSelector((state) => state.nearOffersIsLoading);
   const activeNearOffers = nearOffers.slice(MIN_NEAR_OFFERS_COUNT, Math.min(MAX_NEAR_OFFERS_COUNT, nearOffers.length));
 
   const nearOfferPlusSelectedOffer = [...activeNearOffers];
-  if(selectedOffer) {
+  if (selectedOffer) {
     nearOfferPlusSelectedOffer.push(selectedOffer);
   }
 
