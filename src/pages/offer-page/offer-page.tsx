@@ -13,6 +13,7 @@ import { fetchOfferAction, fetchReviewsAction, fetchNearOffersAction } from '../
 import { AppRoute } from '../../const';
 import { getCity } from '../../store/offers-process/offers-process.selectors';
 import { getOffer, getOfferIsLoading, getOfferIsNotFound } from '../../store/offer-process/offer-process.selectors';
+import { getReviews} from '../../store/reviews-process/reviews-process.selectors';
 
 const MIN_NEAR_OFFERS_COUNT = 0;
 const MAX_NEAR_OFFERS_COUNT = 3;
@@ -25,15 +26,15 @@ function OfferPage(): JSX.Element {
   const selectedOffer = useAppSelector(getOffer);
   const offerIsLoading = useAppSelector(getOfferIsLoading);
   const offerIsNotFound = useAppSelector(getOfferIsNotFound);
-  const reviewsActive = useAppSelector((state) => state.reviews);
-  const nearOffers = useAppSelector((state) => state.nearOffers);
-  const nearOffersIsLoading = useAppSelector((state) => state.nearOffersIsLoading);
-  const activeNearOffers = nearOffers.slice(MIN_NEAR_OFFERS_COUNT, Math.min(MAX_NEAR_OFFERS_COUNT, nearOffers.length));
+  const reviewsActive = useAppSelector(getReviews);
+  // const nearOffers = useAppSelector((state) => state.nearOffers);
+  // const nearOffersIsLoading = useAppSelector((state) => state.nearOffersIsLoading);
+  // const activeNearOffers = nearOffers.slice(MIN_NEAR_OFFERS_COUNT, Math.min(MAX_NEAR_OFFERS_COUNT, nearOffers.length));
 
-  const nearOfferPlusSelectedOffer = [...activeNearOffers];
-  if (selectedOffer) {
-    nearOfferPlusSelectedOffer.push(selectedOffer);
-  }
+  // const nearOfferPlusSelectedOffer = [...activeNearOffers];
+  // if (selectedOffer) {
+  //   nearOfferPlusSelectedOffer.push(selectedOffer);
+  // }
 
   useEffect(() => {
     store.dispatch(fetchOfferAction(offerId));
@@ -160,7 +161,7 @@ function OfferPage(): JSX.Element {
                 {reviewsActive && (<ReviewCardList reviewList={reviewsActive} offerId={offerId} />)}
               </div>
             </div>
-            <Map mapType={'offer'} offers={nearOfferPlusSelectedOffer} cardHoverId={selectedOffer.id} city={cityMapActive} />
+            {/* <Map mapType={'offer'} offers={nearOfferPlusSelectedOffer} cardHoverId={selectedOffer.id} city={cityMapActive} /> */}
           </section>
         )}
         <div className="container">
@@ -169,9 +170,9 @@ function OfferPage(): JSX.Element {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              {!nearOffersIsLoading && (
+              {/* {!nearOffersIsLoading && (
                 <NearPlaceCardList offerList={activeNearOffers} />
-              )}
+              )} */}
             </div>
           </section>
         </div>

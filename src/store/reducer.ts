@@ -3,40 +3,13 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { NameSpace } from '../const';
 import {offers} from './offers-process/offers-process.slice';
 import {offer} from './offer-process/offer-process.slice';
-
-import {
-  setCityActive,
-  getOffers,
-  setChangeMap,
-  getSortType,
-  setSortedOffers,
-  loadOffers,
-  loadOffer,
-  setOffersIsLoading,
-  setOfferIsLoading,
-  setOfferIsNotFound,
-  loadNearOffers,
-  setNearOffersIsLoading,
-  setNearOffersIsNotFound,
-  requireAuthorization,
-  setUser,
-  addReviews,
-
-} from './action';
-
-import { DEFAULT_CITY, defaultLocation, SortType } from '../const';
-import { getSortedOffers } from '../components/sort/utils';
-import { AuthorizationStatus } from '../const';
-import { Offers, Offer } from '../types/offers';
-import { CityMap } from '../types/city-map';
-import { UserLogIn } from '../types/user';
-import { Reviews } from '../types/reviews';
+import { reviews } from './reviews-process/reviews-process.slice';
 
 export const rootReducer = combineReducers({
   [NameSpace.Offers]: offers.reducer,
   [NameSpace.Offer]: offer.reducer,
   // [NameSpace.User]: user.reducer,
-  // [NameSpace.Reviews]: reviews.reducer,
+  [NameSpace.Reviews]: reviews.reducer,
   // [NameSpace.NearOffers]: nearOffers.reducer,
   // [NameSpace.Error]: error.reducer,
 });

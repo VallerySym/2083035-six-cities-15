@@ -3,25 +3,18 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { Offers, Offer } from '../types/offers';
 import {
-  loadOffers,
-  loadOffer,
-  setOffersIsLoading,
-  setOfferIsLoading,
-  setOfferIsNotFound,
   loadNearOffers,
   setNearOffersIsLoading,
   setNearOffersIsNotFound,
   requireAuthorization,
-  getOffers,
   redirectToRoute,
   setUser,
-  addReviews,
 } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { ApiRoute, AuthorizationStatus, AppRoute } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserLogIn } from '../types/user';
-import { Reviews } from '../types/reviews';
+import { Reviews, Review } from '../types/reviews';
 import { Comments } from '../types/comments';
 
 export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
@@ -125,32 +118,31 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const fetchReviewsAction = createAsyncThunk<void, number | string | undefined, {
+export const fetchReviewsAction = createAsyncThunk<Reviews, number | string | undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchReviews',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     const id = _arg;
     const { data } = await api.get<Reviews>(`${ApiRoute.Comments}/${id}`);
 
-    dispatch(addReviews(data));
+    return data;
   });
 
-export const submitCommentAction = createAsyncThunk<void, Comments, {
+export const submitCommentAction = createAsyncThunk<Review, Comments, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }
 >(
   'submitComments',
-  async ({ id, comment, rating }, { dispatch, extra: api }) => {
-    await api.post<Comments>(`${ApiRoute.Comments}/${id}`, {
+  async ({ id, comment, rating }, { extra: api }) => {
+    const { data } = await api.post<Review>(`${ApiRoute.Comments}/${id}`, {
       comment: comment,
       rating: rating,
     });
-
-    dispatch(fetchReviewsAction(id));
+    return data;
   }
 );

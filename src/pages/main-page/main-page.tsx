@@ -1,13 +1,17 @@
 import Logo from '../../components/logo/logo';
 import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+import { AppRoute } from '../../const';
 import Map from '../../components/map/map.tsx';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import LocationsList from '../../components/locations-list/locations-list';
 import Sort from '../../components/sort/sort';
 import NavList from '../../components/nav-list/nav-list';
-import {getCityActive, getCity, getOffers, getOffersIsLoading, getOffersIsNotFound} from '../../store/offers-process/offers-process.selectors';
+import Spinner from '../../components/spinner/spinner';
+import { getCityActive, getCity, getOffers, getOffersIsLoading, getOffersIsNotFound } from '../../store/offers-process/offers-process.selectors';
+import MainEmptyPage from '../main-empty-page/main-empty-page.tsx';
 
 type MainPageProps = {
   citiesList: string[];
@@ -19,6 +23,8 @@ function MainPage({ citiesList }: MainPageProps): JSX.Element {
   const offersActive = useAppSelector(getOffers);
   const cityMapActive = useAppSelector(getCity);
   const placesCount = offersActive.length;
+  const offersIsLoading = useAppSelector(getOffersIsLoading);
+  const offersIsNotFound = useAppSelector(getOffersIsNotFound);
 
   return (
     <div className="page page--gray page--main">
@@ -38,21 +44,29 @@ function MainPage({ citiesList }: MainPageProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <LocationsList cities={citiesList} />
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in {cityActive}</b>
-              <Sort />
-              <div className="cities__places-list places__list tabs__content">
-                <PlaceCardList offerList={offersActive} setCardHoverId={setCardHoverId} />
+        {offersIsLoading && <Spinner />}
+        {offersIsNotFound && <Navigate to={AppRoute.NotFound} />}
+        {!offersIsLoading && (
+          <div className="cities">
+            {placesCount ? (
+              <div className="cities__places-container container">
+                <section className="cities__places places">
+                  <h2 className="visually-hidden">Places</h2>
+                  <b className="places__found">{placesCount} places to stay in {cityActive}</b>
+                  <Sort />
+                  <div className="cities__places-list places__list tabs__content">
+                    <PlaceCardList offerList={offersActive} setCardHoverId={setCardHoverId} />
+                  </div>
+                </section>
+                <div className="cities__right-section">
+                  {/* <Map mapType={'cities'} offers={offersActive} cardHoverId={cardHoverId} city={cityMapActive} /> */}
+                </div>
               </div>
-            </section>
-            <div className="cities__right-section">
-              {/* <Map mapType={'cities'} offers={offersActive} cardHoverId={cardHoverId} city={cityMapActive} /> */}
-            </div>
+            ) : (
+              <MainEmptyPage cityActive = {cityActive}/>
+            )}
           </div>
-        </div>
+        )}
       </main>
     </div>
 
