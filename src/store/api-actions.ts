@@ -3,9 +3,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { Offers, Offer } from '../types/offers';
 import {
-  loadNearOffers,
-  setNearOffersIsLoading,
-  setNearOffersIsNotFound,
   requireAuthorization,
   redirectToRoute,
   setUser,
@@ -45,31 +42,18 @@ export const fetchOfferAction = createAsyncThunk<Offer, number | string | undefi
     },
   );
 
-export const fetchNearOffersAction = createAsyncThunk<void, number | string | undefined,
+export const fetchNearOffersAction = createAsyncThunk<Offers, number | string | undefined,
   {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }>(
-    'fetchNearPlacesAction', async (_arg, { dispatch, extra: api }) => {
+    'fetchNearPlacesAction',
+    async (_arg, { extra: api }) => {
       const id = _arg;
+      const { data } = await api.get<Offers>(`${ApiRoute.Offers}/${id}/nearby`);
 
-      dispatch(setNearOffersIsLoading(true));
-      dispatch(setNearOffersIsNotFound(false));
-
-      try {
-        const { data } = await api.get<Offers>(
-          `${ApiRoute.Offers}/${id}/nearby`
-        );
-
-        if (data) {
-          dispatch(loadNearOffers(data));
-        }
-      } catch {
-        dispatch(setNearOffersIsNotFound(true));
-      } finally {
-        dispatch(setNearOffersIsLoading(false));
-      }
+      return data;
     });
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {

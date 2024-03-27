@@ -59,7 +59,7 @@ function MainPage({ citiesList }: MainPageProps): JSX.Element {
                   </div>
                 </section>
                 <div className="cities__right-section">
-                  {/* <Map mapType={'cities'} offers={offersActive} cardHoverId={cardHoverId} city={cityMapActive} /> */}
+                  <Map mapType={'cities'} offers={offersActive} cardHoverId={cardHoverId} city={cityMapActive} />
                 </div>
               </div>
             ) : (

@@ -29,3 +29,9 @@ export type ReviewsProcess = {
   reviewsIsLoading: boolean;
   reviewsIsNotFound: boolean;
 };
+
+export type NearOffersProcess = {
+  nearOffers: Offers;
+  nearOffersIsLoading: boolean;
+  nearOffersIsNotFound: boolean;
+};
