@@ -3,6 +3,8 @@ import { Offers, Offer } from './offers';
 import { City } from './city';
 import { SortType } from '../const';
 import { Reviews } from './reviews';
+import { AuthorizationStatus } from '../const';
+import { UserLogIn } from './user';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -34,4 +36,9 @@ export type NearOffersProcess = {
   nearOffers: Offers;
   nearOffersIsLoading: boolean;
   nearOffersIsNotFound: boolean;
+};
+
+export type UserProcess = {
+  user: UserLogIn | null;
+  authorizationStatus: AuthorizationStatus;
 };

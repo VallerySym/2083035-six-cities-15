@@ -63,7 +63,7 @@ function MainPage({ citiesList }: MainPageProps): JSX.Element {
                 </div>
               </div>
             ) : (
-              <MainEmptyPage cityActive = {cityActive}/>
+              <MainEmptyPage cityActive={cityActive} />
             )}
           </div>
         )}

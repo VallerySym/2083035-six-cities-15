@@ -2,13 +2,9 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { Offers, Offer } from '../types/offers';
-import {
-  requireAuthorization,
-  redirectToRoute,
-  setUser,
-} from './action';
+import { redirectToRoute, } from './action';
 import { saveToken, dropToken } from '../services/token';
-import { ApiRoute, AuthorizationStatus, AppRoute } from '../const';
+import { ApiRoute, AppRoute } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserLogIn } from '../types/user';
 import { Reviews, Review } from '../types/reviews';
@@ -62,17 +58,12 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
-  async (_arg, { dispatch, extra: api }) => {
-    try {
-      await api.get(ApiRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    }
+  async (_arg, { extra: api }) => {
+    await api.get(ApiRoute.Login)
   },
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<UserLogIn, AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -83,9 +74,9 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const { token } = data;
 
     saveToken(token);
-    dispatch(setUser(data));
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Main));
+
+    return data;
   },
 );
 
@@ -95,10 +86,9 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/logout',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     await api.delete(ApiRoute.Logout);
     dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );
 
