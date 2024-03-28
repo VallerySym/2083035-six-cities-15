@@ -13,5 +13,4 @@ export const rootReducer = combineReducers({
   [NameSpace.User]: user.reducer,
   [NameSpace.Reviews]: reviews.reducer,
   [NameSpace.NearOffers]: nearOffers.reducer,
-  // [NameSpace.Error]: error.reducer,
 });

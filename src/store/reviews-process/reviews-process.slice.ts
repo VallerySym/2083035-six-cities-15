@@ -4,41 +4,41 @@ import { ReviewsProcess } from '../../types/state';
 import { fetchReviewsAction, submitCommentAction } from '../api-actions';
 
 const initialState: ReviewsProcess = {
-    reviews: [],
-    reviewsIsLoading: false,
-    reviewsIsNotFound: false
+  reviews: [],
+  reviewsIsLoading: false,
+  reviewsIsNotFound: false
 };
 
 export const reviews = createSlice({
-    name: NameSpace.Reviews,
-    initialState,
-    reducers: {},
-    extraReducers(builder) {
-        builder
-            .addCase(fetchReviewsAction.pending, (state) => {
-                state.reviewsIsLoading = true;
-                state.reviewsIsNotFound = false;
-            })
+  name: NameSpace.Reviews,
+  initialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder
+      .addCase(fetchReviewsAction.pending, (state) => {
+        state.reviewsIsLoading = true;
+        state.reviewsIsNotFound = false;
+      })
 
-            .addCase(fetchReviewsAction.fulfilled, (state, action) => {
-                const reviewsData = action.payload;
+      .addCase(fetchReviewsAction.fulfilled, (state, action) => {
+        const reviewsData = action.payload;
 
-                if (reviewsData.length > 0) {
-                    state.reviews = reviewsData;
-                }
+        if (reviewsData.length > 0) {
+          state.reviews = reviewsData;
+        }
 
-                state.reviewsIsLoading = false;
-            })
+        state.reviewsIsLoading = false;
+      })
 
-            .addCase(fetchReviewsAction.rejected, (state) => {
-                state.reviewsIsLoading = false;
-                state.reviewsIsNotFound = true;
-            })
+      .addCase(fetchReviewsAction.rejected, (state) => {
+        state.reviewsIsLoading = false;
+        state.reviewsIsNotFound = true;
+      })
 
-            .addCase(submitCommentAction.fulfilled, (state, action) => {
-                const newReview = action.payload;
+      .addCase(submitCommentAction.fulfilled, (state, action) => {
+        const newReview = action.payload;
 
-                state.reviews.push(newReview);
-            });
-    },
+        state.reviews.push(newReview);
+      });
+  },
 });

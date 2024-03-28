@@ -10,7 +10,7 @@ import FavoritesEmptyPage from '../favorites-empty-page/favorites-empty-page';
 
 function FavotitesPage(): JSX.Element {
   const favoriteCards = useAppSelector((state) => state.offers).filter((offer) => offer.isFavorite === true);
-  const favoritesIsLoading = useAppSelector((state) => state.favoritesIsLoading);;
+  const favoritesIsLoading = useAppSelector((state) => state.favoritesIsLoading);
   const favoritesIsNotFound = useAppSelector((state) => state.favoritesIsNotFound);
 
   return (
