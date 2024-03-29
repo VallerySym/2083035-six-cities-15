@@ -2,15 +2,21 @@ import { Helmet } from 'react-helmet-async';
 import { useParams, Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/index';
 import { useEffect } from 'react';
+
+import { AppRoute } from '../../const';
 import Logo from '../../components/logo/logo';
 import ReviewCardList from '../../components/review-card-list/review-card-list';
 import Map from '../../components/map/map';
 import NearPlaceCardList from '../../components/near-place-card-list/near-place-card-list';
 import NavList from '../../components/nav-list/nav-list';
 import Spinner from '../../components/spinner/spinner';
+
 import { store } from '../../store';
 import { fetchOfferAction, fetchReviewsAction, fetchNearOffersAction } from '../../store/api-actions';
-import { AppRoute } from '../../const';
+import { getCity } from '../../store/offers-process/offers-process.selectors';
+import { getOffer, getOfferIsLoading, getOfferIsNotFound } from '../../store/offer-process/offer-process.selectors';
+import { getReviews } from '../../store/reviews-process/reviews-process.selectors';
+import { getNearOffers, getNearOffersIsLoading } from '../../store/near-offers-process/near-offers-process.selectors';
 
 const MIN_NEAR_OFFERS_COUNT = 0;
 const MAX_NEAR_OFFERS_COUNT = 3;
@@ -18,18 +24,18 @@ const MAX_NEAR_OFFERS_COUNT = 3;
 function OfferPage(): JSX.Element {
   const params = useParams();
   const offerId = params.id;
-  const cityMapActive = useAppSelector((state) => state.city);
+  const cityMapActive = useAppSelector(getCity);
 
-  const selectedOffer = useAppSelector((state) => state.offer);
-  const offerIsLoading = useAppSelector((state) => state.offersIsLoading);
-  const offerIsNotFound = useAppSelector((state) => state.offerIsNotFound);
-  const reviewsActive = useAppSelector((state) => state.reviews);
-  const nearOffers = useAppSelector((state) => state.nearOffers);
-  const nearOffersIsLoading = useAppSelector((state) => state.nearOffersIsLoading);
+  const selectedOffer = useAppSelector(getOffer);
+  const offerIsLoading = useAppSelector(getOfferIsLoading);
+  const offerIsNotFound = useAppSelector(getOfferIsNotFound);
+  const reviewsActive = useAppSelector(getReviews);
+  const nearOffers = useAppSelector(getNearOffers);
+  const nearOffersIsLoading = useAppSelector(getNearOffersIsLoading);
   const activeNearOffers = nearOffers.slice(MIN_NEAR_OFFERS_COUNT, Math.min(MAX_NEAR_OFFERS_COUNT, nearOffers.length));
 
   const nearOfferPlusSelectedOffer = [...activeNearOffers];
-  if(selectedOffer) {
+  if (selectedOffer) {
     nearOfferPlusSelectedOffer.push(selectedOffer);
   }
 
