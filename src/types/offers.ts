@@ -1,6 +1,6 @@
-import {City} from './city';
-import {Location} from './location';
-import {Host} from './host';
+import { City } from './city';
+import { Location } from './location';
+import { Host } from './host';
 
 export type Offer = {
   id: string;

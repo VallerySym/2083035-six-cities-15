@@ -32,7 +32,6 @@ export const offer = createSlice({
         if (offerData) {
           state.offer = offerData;
         }
-
         state.offerIsLoading = false;
       })
 

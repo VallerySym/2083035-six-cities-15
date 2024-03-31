@@ -3,7 +3,7 @@ import { OffersProcess } from '../../types/state';
 import { fetchOffersAction } from '../api-actions';
 import { getSortedOffers } from '../../components/sort/utils';
 import { NameSpace, SortType, DEFAULT_CITY, DEFAULT_LOCATION, DEFAULT_SORT } from '../../const';
-import { Offers } from '../../types/offers';
+import { Offers, Offer } from '../../types/offers';
 
 const initialState: OffersProcess = {
   cityActive: DEFAULT_CITY,
@@ -25,9 +25,8 @@ export const offers = createSlice({
 
     getOffers(state) {
       if (state.allOffers.length) {
-        const offersByCity = state.allOffers.filter(
-          (item) => item?.city?.name === state.cityActive
-        );
+        const offersByCity = state.allOffers.filter((item) => item?.city?.name === state.cityActive);
+
         state.offers = getSortedOffers(state.sortType, offersByCity);
       }
     },
@@ -37,17 +36,20 @@ export const offers = createSlice({
       state.city = cityMapActive;
     },
 
-    getSortType(state, action: PayloadAction<SortType>) {
+    setSortType(state, action: PayloadAction<SortType>) {
       state.sortType = action.payload;
-    },
-
-    setSortedOffers(state) {
-      state.offers = getSortedOffers(state.sortType, state.offers);
     },
 
     loadOffers(state, action) {
       state.offers = action.payload;
     },
+
+    setFavoritesOffers(state, action: PayloadAction<Offer>) {
+      const favoriteOffer = action.payload;
+
+      state.offers = state.offers.map((item: Offer) => item.id === favoriteOffer.id ? favoriteOffer : item);
+    },
+
   },
 
   extraReducers(builder) {
@@ -71,4 +73,4 @@ export const offers = createSlice({
   },
 });
 
-export const { getOffers, setCityActive, getSortType, setSortedOffers, setChangeMap } = offers.actions;
+export const { getOffers, setCityActive, setSortType, setChangeMap, setFavoritesOffers } = offers.actions;
