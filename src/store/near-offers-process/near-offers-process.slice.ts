@@ -46,4 +46,4 @@ export const nearOffers = createSlice({
   },
 });
 
-export const { setFavoriteNearOffers } = nearOffers.actions
+export const { setFavoriteNearOffers } = nearOffers.actions;

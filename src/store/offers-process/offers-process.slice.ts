@@ -40,10 +40,6 @@ export const offers = createSlice({
       state.sortType = action.payload;
     },
 
-    loadOffers(state, action) {
-      state.offers = action.payload;
-    },
-
     setFavoritesOffers(state, action: PayloadAction<Offer>) {
       const favoriteOffer = action.payload;
 

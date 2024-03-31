@@ -25,7 +25,7 @@ function MainPage({ citiesList }: MainPageProps): JSX.Element {
   const placesCount = offersActive.length;
   const offersIsLoading = useAppSelector(getOffersIsLoading);
   const offersIsNotFound = useAppSelector(getOffersIsNotFound);
-  
+
   return (
     <div className="page page--gray page--main">
       <Helmet>

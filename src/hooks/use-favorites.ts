@@ -6,21 +6,21 @@ import {AppRoute,AuthorizationStatus,FavoritesUpdate,} from '../const';
 
 
 export const useFavorites = (
-    offerId: string,
-    status: number,
-    favoritesUpdate: FavoritesUpdate
+  offerId: string,
+  status: number,
+  favoritesUpdate: FavoritesUpdate
 ) => {
-    const dispatch = useAppDispatch();
-    const authorizationStatus = useAppSelector(getAuthorizationStatus);
-    const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const navigate = useNavigate();
 
-    function onChangeFavorites() {
-        if (authorizationStatus !== AuthorizationStatus.Auth) {
-            navigate(AppRoute.Login);
-        }
-
-        dispatch(setFavoritesAction({ offerId, status, favoritesUpdate }));
+  function onChangeFavorites() {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
     }
 
-    return onChangeFavorites;
+    dispatch(setFavoritesAction({ offerId, status, favoritesUpdate }));
+  }
+
+  return onChangeFavorites;
 };

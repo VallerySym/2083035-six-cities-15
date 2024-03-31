@@ -13,7 +13,7 @@ import { FavoriteData } from '../types/favorites';
 import { FavoritesUpdate } from '../const';
 import { setFavoriteOffer } from './offer-process/offer-process.slice';
 import { setFavoritesOffers } from './offers-process/offers-process.slice';
-import { setFavoriteNearOffers } from './near-offers-process/near-offers-process.slice'
+import { setFavoriteNearOffers } from './near-offers-process/near-offers-process.slice';
 
 export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;

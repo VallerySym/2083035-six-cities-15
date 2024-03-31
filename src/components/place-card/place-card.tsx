@@ -26,7 +26,7 @@ function PlaceCard({ placeType, offerCard, setCardHoverId }: PlaceCardProps): JS
     String(offerCard.id),
     currentStatus,
     FavoritesUpdate.Offers
-  )
+  );
 
 
   return (
