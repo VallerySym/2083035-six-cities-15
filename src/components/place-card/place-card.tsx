@@ -8,9 +8,10 @@ type PlaceCardProps = {
   placeType: 'cities' | 'near-places';
   offerCard: Offer;
   setCardHoverId?(id: string | null): void;
+  favoritesUpdate: FavoritesUpdate;
 }
 
-function PlaceCard({ placeType, offerCard, setCardHoverId }: PlaceCardProps): JSX.Element {
+function PlaceCard({ favoritesUpdate, placeType, offerCard, setCardHoverId }: PlaceCardProps): JSX.Element {
 
   const handleMouseOver = () => {
     setCardHoverId?.(offerCard.id);
@@ -25,9 +26,8 @@ function PlaceCard({ placeType, offerCard, setCardHoverId }: PlaceCardProps): JS
   const onChangeFavorites = useFavorites(
     String(offerCard.id),
     currentStatus,
-    FavoritesUpdate.Offers
+    favoritesUpdate
   );
-
 
   return (
     <article

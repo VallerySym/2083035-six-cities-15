@@ -98,8 +98,12 @@ function OfferPage(): JSX.Element {
                   <h1 className="offer__name">
                     {selectedOffer.title}
                   </h1>
-                  <button onClick={onChangeFavorites} className="offer__bookmark-button button" type="button">
-                    <svg className={`offer__bookmark-icon ${selectedOffer.isFavorite ? 'offer__bookmark-button--active' : ''}`} width={31} height={33}>
+                  <button
+                    onClick={onChangeFavorites}
+                    className={`offer__bookmark-button button ${selectedOffer?.isFavorite ? 'offer__bookmark-button--active' : ''}`}
+                    type="button"
+                  >
+                    <svg className="offer__bookmark-icon" width={31} height={33}>
                       <use xlinkHref="#icon-bookmark" />
                     </svg>
                     <span className="visually-hidden">To bookmarks</span>
