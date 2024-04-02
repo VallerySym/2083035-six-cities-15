@@ -1,6 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-import Logo from '../../components/logo/logo';
-import NavList from '../../components/nav-list/nav-list';
 
 function FavoritesEmptyPage(): JSX.Element {
   return (
@@ -8,16 +6,7 @@ function FavoritesEmptyPage(): JSX.Element {
       <Helmet>
         <title>Six cities. Favorites.</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <NavList />
-          </div>
-        </div>
-      </header>
+
       <main className="page__main page__main--favorites page__main--favorites-empty">
         <div className="page__favorites-container container">
           <section className="favorites favorites--empty">
