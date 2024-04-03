@@ -16,9 +16,6 @@ export const getCity = (state: Pick<State, NameSpace.Offers>): City =>
 export const getSortType = (state: Pick<State, NameSpace.Offers>): SortType =>
     state[NameSpace.Offers].sortType;
 
-export const getSortedOffers = (state: Pick<State, NameSpace.Offers>): Offers =>
-    state[NameSpace.Offers].offers;
-
 export const getOffersIsLoading = (state: Pick<State, NameSpace.Offers>): boolean =>
     state[NameSpace.Offers].offersIsLoading;
 

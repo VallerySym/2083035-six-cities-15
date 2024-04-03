@@ -1,13 +1,9 @@
 import {
-    commerce,
-    datatype,
-    image,
-    internet,
-    date,
-    lorem,
+    commerce, datatype, image,
+    internet, lorem,
 } from 'faker';
 
-import { Offer } from '../types/offers';
+import { Offer, Offers } from '../types/offers';
 import { Location } from '../types/location';
 import { City } from '../types/city';
 import { Host } from '../types/host';
@@ -23,7 +19,7 @@ const makeFakeCity = (): City => ({
     location: makeFakeLocation(),
 });
 
-const makeFakeHost= (): Host => ({
+const makeFakeHost = (): Host => ({
     hostName: internet.userName(),
     isPro: datatype.boolean(),
     avatarUrl: internet.avatar(),
@@ -48,4 +44,7 @@ const makeFakeOffer = (): Offer => ({
     goods: [commerce.product()],
 });
 
-export  {makeFakeOffer};
+const makeFakeOffers = (): Offers =>
+    Array.from({ length: 12 }, makeFakeOffer);
+
+export { makeFakeLocation, makeFakeCity, makeFakeOffer, makeFakeOffers };
