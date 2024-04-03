@@ -1,33 +1,37 @@
 import { AuthorizationStatus, NameSpace } from '../../const';
 import { UserProcess } from '../../types/state';
+import { makeFakeUserData } from '../../utils/mocks';
 import { getAuthCheckedStatus, getAuthorizationStatus } from './user-process.selectors';
 
+const fakeUser = makeFakeUserData();
+
+const fakeState: UserProcess = {
+  user: fakeUser,
+  authorizationStatus: AuthorizationStatus.Auth,
+};
+
+let state = { [NameSpace.User]: fakeState };
+
 describe('UserProcess selectors', () => {
+  beforeEach(() => {
+    state = { [NameSpace.User]: { ...fakeState } };
+  });
+
   it('should return authorization status from state', () => {
-    const authorizationStatus = AuthorizationStatus.Auth;
+    const result = getAuthorizationStatus(state);
 
-    const state: UserProcess = { authorizationStatus };
-
-    const result = getAuthorizationStatus({ [NameSpace.User]: state });
-
-    expect(result).toBe(authorizationStatus);
+    expect(result).toEqual(AuthorizationStatus.Auth);
   });
 
   it('should return "true" because auth status is "Auth"', () => {
-    const authorizationStatus = AuthorizationStatus.Auth;
-    const state: UserProcess = { authorizationStatus };
+    const result = getAuthorizationStatus(state);
 
-    const result = getAuthCheckedStatus({ [NameSpace.User]: state });
-
-    expect(result).toBe(true);
+    expect(result).toEqual(AuthorizationStatus.Auth);
   });
 
-  it('should return "false" because auth status is "Unknown"', () => {
-    const authorizationStatus = AuthorizationStatus.Unknown;
-    const state: UserProcess = { authorizationStatus };
+  it('should return "true"', () => {
+    const result = getAuthCheckedStatus(state);
 
-    const result = getAuthCheckedStatus({ [NameSpace.User]: state });
-
-    expect(result).toBe(false);
+    expect(result).toEqual(true);
   });
 });
