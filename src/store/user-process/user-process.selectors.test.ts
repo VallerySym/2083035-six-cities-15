@@ -3,31 +3,31 @@ import { UserProcess } from '../../types/state';
 import { getAuthCheckedStatus, getAuthorizationStatus } from './user-process.selectors';
 
 describe('UserProcess selectors', () => {
-    it('should return authorization status from state', () => {
-        const authorizationStatus = AuthorizationStatus.Auth;
-        
-        const state: UserProcess = { authorizationStatus };
+  it('should return authorization status from state', () => {
+    const authorizationStatus = AuthorizationStatus.Auth;
 
-        const result = getAuthorizationStatus({ [NameSpace.User]: state });
+    const state: UserProcess = { authorizationStatus };
 
-        expect(result).toBe(authorizationStatus);
-    });
+    const result = getAuthorizationStatus({ [NameSpace.User]: state });
 
-    it('should return "true" because auth status is "Auth"', () => {
-        const authorizationStatus = AuthorizationStatus.Auth;
-        const state: UserProcess = { authorizationStatus };
+    expect(result).toBe(authorizationStatus);
+  });
 
-        const result = getAuthCheckedStatus({ [NameSpace.User]: state });
+  it('should return "true" because auth status is "Auth"', () => {
+    const authorizationStatus = AuthorizationStatus.Auth;
+    const state: UserProcess = { authorizationStatus };
 
-        expect(result).toBe(true);
-    });
+    const result = getAuthCheckedStatus({ [NameSpace.User]: state });
 
-    it('should return "false" because auth status is "Unknown"', () => {
-        const authorizationStatus = AuthorizationStatus.Unknown;
-        const state: UserProcess = { authorizationStatus };
+    expect(result).toBe(true);
+  });
 
-        const result = getAuthCheckedStatus({ [NameSpace.User]: state });
+  it('should return "false" because auth status is "Unknown"', () => {
+    const authorizationStatus = AuthorizationStatus.Unknown;
+    const state: UserProcess = { authorizationStatus };
 
-        expect(result).toBe(false);
-    });
+    const result = getAuthCheckedStatus({ [NameSpace.User]: state });
+
+    expect(result).toBe(false);
+  });
 });
