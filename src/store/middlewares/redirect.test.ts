@@ -4,7 +4,7 @@ import browserHistory from '../../browser-history';
 import { AnyAction } from '@reduxjs/toolkit';
 import { redirectToRoute } from '../action';
 import { AppRoute } from '../../const';
-import {State} from '../../types/state';
+import { State } from '../../types/state';
 
 vi.mock('../../browser-history', () => ({
     default: {
@@ -34,7 +34,7 @@ describe('Redirect middleware', () => {
         expect(browserHistory.location.pathname).toBe(AppRoute.Login);
     });
 
-    it('should not redirect to "/lose" with empty action', () => {
+    it('should not redirect to "/not-found" with empty action', () => {
         const emptyAction = { type: '', payload: AppRoute.NotFound };
         store.dispatch(emptyAction);
         expect(browserHistory.location.pathname).not.toBe(AppRoute.NotFound);
