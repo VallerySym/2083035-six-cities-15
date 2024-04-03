@@ -44,7 +44,8 @@ const makeFakeOffer = (): Offer => ({
     goods: [commerce.product()],
 });
 
-const makeFakeOffers = (): Offers =>
-    Array.from({ length: 12 }, makeFakeOffer);
+const makeFakeOffers = (): Offers => Array.from({ length: 12 }, makeFakeOffer);
 
-export { makeFakeLocation, makeFakeCity, makeFakeOffer, makeFakeOffers };
+const makeFakeNearOffers= (): Offers => Array.from({ length: 3 }, makeFakeOffer);
+
+export { makeFakeLocation, makeFakeCity, makeFakeOffer, makeFakeOffers, makeFakeNearOffers };

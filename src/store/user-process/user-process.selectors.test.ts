@@ -5,6 +5,7 @@ import { getAuthCheckedStatus, getAuthorizationStatus } from './user-process.sel
 describe('UserProcess selectors', () => {
     it('should return authorization status from state', () => {
         const authorizationStatus = AuthorizationStatus.Auth;
+        
         const state: UserProcess = { authorizationStatus };
 
         const result = getAuthorizationStatus({ [NameSpace.User]: state });
