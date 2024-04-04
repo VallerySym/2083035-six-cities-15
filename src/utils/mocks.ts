@@ -9,6 +9,15 @@ import { City } from '../types/city';
 import { Host } from '../types/host';
 import { Review, Reviews } from '../types/reviews';
 import { User, UserLogIn } from '../types/user';
+import { Action } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { createAPI } from '../services/api';
+import { State } from '../types/state';
+import { Comments } from '../types/comments';
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
+
+const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
 
 const makeFakeLocation = (): Location => ({
     zoom: datatype.number({ min: 5, max: 15 }),
@@ -75,7 +84,14 @@ const makeFakeReview = (): Review => ({
 
 const makeFakeReviews = (): Reviews => Array.from({ length: 5 }, makeFakeReview);
 
+const makeFakeCommentData = (): Comments => ({
+    id: datatype.string(),
+    rating: datatype.number({ min: 1, max: 5, precision: 0.1 }),
+    comment: lorem.sentence(),
+  });
+
 export {
     makeFakeLocation, makeFakeCity, makeFakeOffer, makeFakeOffers,
-    makeFakeNearOffers, makeFakeReview, makeFakeReviews, makeFakeUserData
-};
+    makeFakeNearOffers, makeFakeReview, makeFakeReviews, makeFakeUserData,
+    extractActionsTypes, makeFakeCommentData
+}
