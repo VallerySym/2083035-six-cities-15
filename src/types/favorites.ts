@@ -1,4 +1,4 @@
-import {FavoritesUpdate} from '../const';
+import { FavoritesUpdate } from '../const';
 
 export type FavoriteData = {
   offerId: string;
