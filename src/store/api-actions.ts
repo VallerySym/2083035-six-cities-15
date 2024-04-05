@@ -10,7 +10,6 @@ import { UserLogIn } from '../types/user';
 import { Reviews, Review } from '../types/reviews';
 import { Comments } from '../types/comments';
 import { FavoriteData } from '../types/favorites';
-import { FavoritesUpdate } from '../const';
 import { setFavoriteOffer } from './offer-process/offer-process.slice';
 import { setFavoritesOffers } from './offers-process/offers-process.slice';
 import { setFavoriteNearOffers } from './near-offers-process/near-offers-process.slice';
@@ -57,14 +56,16 @@ export const fetchNearOffersAction = createAsyncThunk<Offers, number | string | 
       return data;
     });
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserLogIn, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
   async (_arg, { extra: api }) => {
-    await api.get(ApiRoute.Login);
+    const { data } = await api.get<UserLogIn>(ApiRoute.Login);
+
+    return data;
   },
 );
 
@@ -149,25 +150,10 @@ export const setFavoritesAction = createAsyncThunk<Offer, FavoriteData, {
   async (favoriteParams: FavoriteData, { dispatch, extra: api }) => {
     const { data } = await api.post<Offer>(`${ApiRoute.Favorite}/${favoriteParams.offerId}/${favoriteParams.status}`);
 
-    switch (favoriteParams.favoritesUpdate) {
-      case FavoritesUpdate.Offers:
-        dispatch(setFavoritesOffers(data));
-        break;
-      case FavoritesUpdate.Offer:
-        dispatch(setFavoriteOffer(data.isFavorite));
-        dispatch(setFavoritesOffers(data));
-        dispatch(setFavoriteNearOffers(data));
-        break;
-      case FavoritesUpdate.Favorites:
-        dispatch(fetchFavoritesAction());
-        dispatch(setFavoritesOffers(data));
-        dispatch(setFavoriteOffer(data.isFavorite));
-        dispatch(setFavoriteNearOffers(data));
-        break;
-      case FavoritesUpdate.NearOffers:
-        dispatch(setFavoriteNearOffers(data));
-        break;
-    }
+    dispatch(fetchFavoritesAction());
+    dispatch(setFavoriteOffer(data.isFavorite));
+    dispatch(setFavoriteNearOffers(data));
+    dispatch(setFavoritesOffers(data));
 
     return data;
   }

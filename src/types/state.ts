@@ -43,7 +43,7 @@ export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
 };
 
-export type favoritesProcess = {
+export type FavoritesProcess = {
   favorites: Offers;
   favoritesIsLoading: boolean;
   favoritesIsNotFound: boolean;
