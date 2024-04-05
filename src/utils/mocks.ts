@@ -10,6 +10,9 @@ import { ThunkDispatch } from 'redux-thunk';
 import { createAPI } from '../services/api';
 import { State } from '../types/state';
 import { Comments } from '../types/comments';
+import { DEFAULT_CITY, DEFAULT_LOCATION, DEFAULT_SORT, AuthorizationStatus } from '../const';
+import { getToken } from '../services/token';
+
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
@@ -86,8 +89,47 @@ const makeFakeCommentData = (): Comments => ({
   comment: lorem.sentence(),
 });
 
+const token = getToken();
+
+const makeFakeStore = (initialState?: Partial<State>): State => ({
+  OFFERS: {
+    cityActive: DEFAULT_CITY,
+    city: DEFAULT_LOCATION,
+    sortType: DEFAULT_SORT,
+    allOffers: [],
+    offers: [],
+    offersIsLoading: false,
+    offersIsNotFound: false
+  },
+  OFFER: {
+    offer: null,
+    offerIsLoading: false,
+    offerIsNotFound: false
+  },
+  USER: {
+    authorizationStatus: token ? AuthorizationStatus.Auth : AuthorizationStatus.Unknown,
+    user: null
+  },
+  REVIEWS: {
+    reviews: [],
+    reviewsIsLoading: false,
+    reviewsIsNotFound: true
+  },
+  NEAROFFERS: {
+    nearOffers: [],
+    nearOffersIsLoading: false,
+    nearOffersIsNotFound: false,
+  },
+  FAVORITES: {
+    favorites: [],
+    favoritesIsLoading: false,
+    favoritesIsNotFound: false
+  },
+  ...initialState ?? {},
+});
+
 export {
   makeFakeLocation, makeFakeCity, makeFakeOffer, makeFakeOffers,
   makeFakeNearOffers, makeFakeReview, makeFakeReviews, makeFakeUserData,
-  extractActionsTypes, makeFakeCommentData
+  extractActionsTypes, makeFakeCommentData, makeFakeStore
 };
