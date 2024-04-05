@@ -56,14 +56,16 @@ export const fetchNearOffersAction = createAsyncThunk<Offers, number | string | 
       return data;
     });
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserLogIn, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
   async (_arg, { extra: api }) => {
-    await api.get(ApiRoute.Login);
+    const { data } = await api.get<UserLogIn>(ApiRoute.Login);
+
+    return data;
   },
 );
 

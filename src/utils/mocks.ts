@@ -71,7 +71,7 @@ const makeFakeUserData = (): UserLogIn => ({
   avatarUrl: internet.avatar(),
   email: internet.email(),
   token: datatype.string(),
-  id: datatype.number({ min: 1, max: 20 }),
+  id: datatype.number(),
 });
 
 const makeFakeReview = (): Review => ({
