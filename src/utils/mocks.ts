@@ -12,7 +12,7 @@ import { State } from '../types/state';
 import { Comments } from '../types/comments';
 import { DEFAULT_CITY, DEFAULT_LOCATION, DEFAULT_SORT, AuthorizationStatus } from '../const';
 import { getToken } from '../services/token';
-
+import { useRef } from 'react';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
@@ -128,8 +128,13 @@ const makeFakeStore = (initialState?: Partial<State>): State => ({
   ...initialState ?? {},
 });
 
+const makeFakeMap = () => ({
+  mapRef: useRef(null),
+  city: DEFAULT_CITY,
+});
+
 export {
   makeFakeLocation, makeFakeCity, makeFakeOffer, makeFakeOffers,
   makeFakeNearOffers, makeFakeReview, makeFakeReviews, makeFakeUserData,
-  extractActionsTypes, makeFakeCommentData, makeFakeStore
+  extractActionsTypes, makeFakeCommentData, makeFakeStore, makeFakeMap
 };
