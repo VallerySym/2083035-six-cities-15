@@ -10,7 +10,7 @@ import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import Spinner from '../spinner/spinner';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import { getOffersIsLoading } from '../../store/offers-process/offers-process.selectors';
