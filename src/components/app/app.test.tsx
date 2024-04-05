@@ -6,20 +6,20 @@ import { withHistory, withStore } from '../../utils/mock-component';
 import { makeFakeStore } from '../../utils/mocks';
 
 describe('Application Routing', () => {
-    let mockHistory: MemoryHistory;
+  let mockHistory: MemoryHistory;
 
-    beforeEach(() => {
-        mockHistory = createMemoryHistory();
-    });
+  beforeEach(() => {
+    mockHistory = createMemoryHistory();
+  });
 
-    it('should render MainPage when user navigate to "/"', () => {
-        const withHistoryComponent = withHistory(<App />, mockHistory);
-        const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore());
-        mockHistory.push(AppRoute.Main);
+  it('should render MainPage when user navigate to "/"', () => {
+    const withHistoryComponent = withHistory(<App />, mockHistory);
+    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore());
+    mockHistory.push(AppRoute.Main);
 
-        render(withStoreComponent);
+    render(withStoreComponent);
 
-        expect(screen.getByText(/Cities/i)).toBeInTheDocument();
-    });
+    expect(screen.getByText(/Cities/i)).toBeInTheDocument();
+  });
 
 });

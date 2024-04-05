@@ -6,20 +6,20 @@ import HistoryRouter from '../history-router/history-router';
 const history = createMemoryHistory();
 
 describe('Component: Logo', () => {
-    it('should render correctly', () => {
-        const logoLinkTestId = 'logo';
-        const imageTestId = 'logo-img';
+  it('should render correctly', () => {
+    const logoLinkTestId = 'logo';
+    const imageTestId = 'logo-img';
 
-        render(
-            <HistoryRouter history={history}>
-                <Logo />
-            </HistoryRouter>
-        );
+    render(
+      <HistoryRouter history={history}>
+        <Logo />
+      </HistoryRouter>
+    );
 
-        const logoLink = screen.getByTestId(logoLinkTestId);
-        const image = screen.getByTestId(imageTestId);
+    const logoLink = screen.getByTestId(logoLinkTestId);
+    const image = screen.getByTestId(imageTestId);
 
-        expect(logoLink).toBeInTheDocument();
-        expect(image).toBeInTheDocument();
-    });
+    expect(logoLink).toBeInTheDocument();
+    expect(image).toBeInTheDocument();
+  });
 });

@@ -11,15 +11,15 @@ import { AppThunkDispatch } from './mocks';
 import { Provider } from 'react-redux';
 
 export function withHistory(component: JSX.Element, history?: MemoryHistory) {
-    const memoryHistory = history ?? createMemoryHistory();
+  const memoryHistory = history ?? createMemoryHistory();
 
-    return (
-        <HistoryRouter history={memoryHistory}>
-            <HelmetProvider>
-                {component}
-            </HelmetProvider>
-        </HistoryRouter>
-    );
+  return (
+    <HistoryRouter history={memoryHistory}>
+      <HelmetProvider>
+        {component}
+      </HelmetProvider>
+    </HistoryRouter>
+  );
 }
 
 type ComponentWithMockStore = {
@@ -29,18 +29,18 @@ type ComponentWithMockStore = {
 }
 
 export function withStore(
-    component: JSX.Element,
-    initialState: Partial<State> = {},
+  component: JSX.Element,
+  initialState: Partial<State> = {},
 ): ComponentWithMockStore {
-    const axios = createAPI();
-    const mockAxiosAdapter = new MockAdapter(axios);
-    const middleware = [thunk.withExtraArgument(axios)];
-    const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
-    const mockStore = mockStoreCreator(initialState);
+  const axios = createAPI();
+  const mockAxiosAdapter = new MockAdapter(axios);
+  const middleware = [thunk.withExtraArgument(axios)];
+  const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
+  const mockStore = mockStoreCreator(initialState);
 
-    return ({
-        withStoreComponent: <Provider store={mockStore}>{component}</Provider>,
-        mockStore,
-        mockAxiosAdapter,
-    });
+  return ({
+    withStoreComponent: <Provider store={mockStore}>{component}</Provider>,
+    mockStore,
+    mockAxiosAdapter,
+  });
 }
