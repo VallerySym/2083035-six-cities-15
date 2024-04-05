@@ -10,7 +10,7 @@ type MapProps = {
   mapType: 'cities' | 'offer';
   city: City;
   offers: Offers;
-  cardHoverId: Offer['id'] | null;
+  cardHoverId?: Offer['id'] | null;
 }
 
 function Map({ mapType, city, offers, cardHoverId }: MapProps) {
@@ -65,6 +65,7 @@ function Map({ mapType, city, offers, cardHoverId }: MapProps) {
         }}
       className={`${mapType}__map map`}
       ref={mapRef}
+      data-testid='map'
     >
     </section>
   );
