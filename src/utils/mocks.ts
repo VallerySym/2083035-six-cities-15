@@ -1,8 +1,4 @@
-import {
-  commerce, datatype, image,
-  internet, lorem, date
-} from 'faker';
-
+import { commerce, datatype, image, internet, lorem, date } from 'faker';
 import { Offer, Offers } from '../types/offers';
 import { Location } from '../types/location';
 import { City } from '../types/city';
