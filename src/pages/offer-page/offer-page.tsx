@@ -10,6 +10,7 @@ import Map from '../../components/map/map';
 import NearPlaceCardList from '../../components/near-place-card-list/near-place-card-list';
 import NavList from '../../components/nav-list/nav-list';
 import Spinner from '../../components/spinner/spinner';
+import { handleStars } from '../../const';
 
 import { store } from '../../store';
 import { fetchOfferAction, fetchReviewsAction, fetchNearOffersAction } from '../../store/api-actions';
@@ -20,8 +21,9 @@ import { getNearOffers, getNearOffersIsLoading } from '../../store/near-offers-p
 import { useFavorites } from '../../hooks/use-favorites';
 import { FavoritesUpdate } from '../../const';
 
-const MIN_NEAR_OFFERS_COUNT = 0;
+const MIN_COUNT = 0;
 const MAX_NEAR_OFFERS_COUNT = 3;
+const MAX_IMG_COUNT = 6;
 
 function OfferPage(): JSX.Element {
   const params = useParams();
@@ -34,7 +36,7 @@ function OfferPage(): JSX.Element {
   const reviewsActive = useAppSelector(getReviews);
   const nearOffers = useAppSelector(getNearOffers);
   const nearOffersIsLoading = useAppSelector(getNearOffersIsLoading);
-  const activeNearOffers = nearOffers.slice(MIN_NEAR_OFFERS_COUNT, Math.min(MAX_NEAR_OFFERS_COUNT, nearOffers.length));
+  const activeNearOffers = nearOffers.slice(MIN_COUNT, Math.min(MAX_NEAR_OFFERS_COUNT, nearOffers.length));
 
   const nearOfferPlusSelectedOffer = [...activeNearOffers];
   if (selectedOffer) {
@@ -76,15 +78,16 @@ function OfferPage(): JSX.Element {
           <section className="offer">
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
-                {selectedOffer.images
-                  .map((url, id) => {
-                    const keyValue = `${id}-${url}`;
-                    return (
-                      <div key={keyValue} className="offer__image-wrapper">
-                        <img className="offer__image" src={url} alt="Photo studio" />
-                      </div>
-                    );
-                  })}
+                {selectedOffer.images?.length > 0 &&
+                  selectedOffer.images.slice(MIN_COUNT, Math.min(MAX_IMG_COUNT, selectedOffer.images.length))
+                    .map((url, id) => {
+                      const keyValue = `${id}-${url}`;
+                      return (
+                        <div key={keyValue} className="offer__image-wrapper">
+                          <img className="offer__image" src={url} alt="Photo studio" />
+                        </div>
+                      );
+                    })}
               </div>
             </div>
             <div className="offer__container container">
@@ -111,7 +114,7 @@ function OfferPage(): JSX.Element {
                 </div>
                 <div className="offer__rating rating">
                   <div className="offer__stars rating__stars">
-                    <span style={{ width: '80%' }} />
+                    <span style={{ width: `${handleStars(selectedOffer.rating)}` }} />
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="offer__rating-value rating__value">{selectedOffer.rating}</span>

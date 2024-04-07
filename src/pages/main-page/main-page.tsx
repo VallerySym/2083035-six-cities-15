@@ -38,9 +38,9 @@ function MainPage(): JSX.Element {
         </div>
       </header>
       <main className="page__main page__main--index">
-        <h1 className="visually-hidden">Cities</h1>
         <LocationsList cityActive={cityActive} />
         {offersIsLoading && <Spinner />}
+        <h1 className="visually-hidden">Cities</h1>
         {offersIsNotFound && <Navigate to={AppRoute.NotFound} />}
         {!offersIsLoading && (
           <div className="cities">

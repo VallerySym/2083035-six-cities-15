@@ -2,11 +2,13 @@ import { ReviewsProcess } from '../../types/state';
 import { reviews } from './reviews-process.slice';
 import { makeFakeReviews } from '../../utils/mocks';
 import { fetchReviewsAction } from '../api-actions';
+import { RequestStatus } from '../../const';
 
 const initialState: ReviewsProcess = {
   reviews: [],
   reviewsIsLoading: false,
-  reviewsIsNotFound: false
+  reviewsIsNotFound: false,
+  reviewRequestStatus: RequestStatus.Idle,
 };
 
 let state: ReviewsProcess;

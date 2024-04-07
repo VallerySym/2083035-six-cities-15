@@ -10,9 +10,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { createAPI } from '../services/api';
 import { State } from '../types/state';
 import { Comments } from '../types/comments';
-import { DEFAULT_CITY, DEFAULT_LOCATION, DEFAULT_SORT, AuthorizationStatus } from '../const';
-import { getToken } from '../services/token';
-import { useRef } from 'react';
+import { DEFAULT_CITY, DEFAULT_LOCATION, DEFAULT_SORT, AuthorizationStatus, RequestStatus } from '../const';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
@@ -59,7 +57,7 @@ const makeFakeOffers = (): Offers => Array.from({ length: 12 }, makeFakeOffer);
 const makeFakeNearOffers = (): Offers => Array.from({ length: 3 }, makeFakeOffer);
 
 const makeFakeUser = (): User => ({
-  userName: internet.userName(),
+  name: internet.userName(),
   isPro: datatype.boolean(),
   avatarUrl: internet.avatar(),
 });
@@ -89,8 +87,6 @@ const makeFakeCommentData = (): Comments => ({
   comment: lorem.sentence(),
 });
 
-const token = getToken();
-
 const makeFakeStore = (initialState?: Partial<State>): State => ({
   OFFERS: {
     cityActive: DEFAULT_CITY,
@@ -107,18 +103,22 @@ const makeFakeStore = (initialState?: Partial<State>): State => ({
     offerIsNotFound: false
   },
   USER: {
-    authorizationStatus: token ? AuthorizationStatus.Auth : AuthorizationStatus.Unknown,
+    authorizationStatus: AuthorizationStatus.Unknown,
     user: null
   },
   REVIEWS: {
     reviews: [],
     reviewsIsLoading: false,
-    reviewsIsNotFound: true
+    reviewsIsNotFound: true,
+    reviewRequestStatus: RequestStatus.Idle,
   },
   NEAROFFERS: {
     nearOffers: [],
     nearOffersIsLoading: false,
     nearOffersIsNotFound: false,
+  },
+  ERROR: {
+    errorMessage: null
   },
   FAVORITES: {
     favorites: [],
@@ -128,13 +128,8 @@ const makeFakeStore = (initialState?: Partial<State>): State => ({
   ...initialState ?? {},
 });
 
-const makeFakeMap = () => ({
-  mapRef: useRef(null),
-  city: DEFAULT_CITY,
-});
-
 export {
   makeFakeLocation, makeFakeCity, makeFakeOffer, makeFakeOffers,
   makeFakeNearOffers, makeFakeReview, makeFakeReviews, makeFakeUserData,
-  extractActionsTypes, makeFakeCommentData, makeFakeStore, makeFakeMap
+  extractActionsTypes, makeFakeCommentData, makeFakeStore
 };
