@@ -16,7 +16,7 @@ const validatePassword = (password: string): boolean =>
   /^[A-za-z0-9_]+[A-za-z0-9_]{1,}$/.test(password);
 
 const validate = (formData: AuthData): boolean => {
-  if (!validateEmail(formData.login)) {
+  if (!validateEmail(formData.email)) {
     return false;
   }
   if (!validatePassword(formData.password)) {
@@ -39,7 +39,7 @@ function LoginPage(): JSX.Element {
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       dispatch(loginAction({
-        login: loginRef.current.value,
+        email: loginRef.current.value,
         password: passwordRef.current.value
       }));
     }
@@ -56,7 +56,7 @@ function LoginPage(): JSX.Element {
 
   const [isSubmitButtonOk, setIsSubmitButtonOk] = useState(false);
   const [formData, setFormData] = useState<AuthData>({
-    login: '',
+    email: '',
     password: '',
   });
 
@@ -100,10 +100,10 @@ function LoginPage(): JSX.Element {
                 <input
                   className="login__input form__input"
                   onChange={handleTextChange}
-                  value={formData.login}
+                  value={formData.email}
                   ref={loginRef}
                   type="email"
-                  name="login"
+                  name="email"
                   id="email"
                   placeholder="Email"
                   required
