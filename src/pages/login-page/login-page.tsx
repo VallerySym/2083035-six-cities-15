@@ -1,14 +1,20 @@
 import { Helmet } from 'react-helmet-async';
-import { useRef, FormEvent } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { useRef, FormEvent, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import Logo from '../../components/logo/logo';
+import { AppRoute, citiesList, getRandomInteger, AuthorizationStatus } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { setCityActive, getOffers, setChangeMap } from '../../store/offers-process/offers-process.slice';
+
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -20,6 +26,21 @@ function LoginPage(): JSX.Element {
       }));
     }
   };
+
+  const cityButton = citiesList[getRandomInteger(0, citiesList.length - 1)];
+  const authStatus = useAppSelector(getAuthorizationStatus);
+
+  function onCityButton(city: string) {
+    dispatch(setCityActive(city));
+    dispatch(getOffers());
+    dispatch(setChangeMap());
+  }
+
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Main);
+    }
+  }, [authStatus, navigate]);
 
   return (
     <div className="page page--gray page--login">
@@ -74,9 +95,16 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                onClick={() =>
+                  onCityButton(cityButton)}
+                to={AppRoute.Main}
+              >
+                <span>
+                  {cityButton}
+                </span>
+              </Link>
             </div>
           </section>
         </div>

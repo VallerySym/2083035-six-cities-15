@@ -76,13 +76,17 @@ export const loginAction = createAsyncThunk<UserLogIn, AuthData, {
 }>(
   'user/login',
   async ({ login: email, password }, { dispatch, extra: api }) => {
-    const { data } = await api.post<UserLogIn>(ApiRoute.Login, { email, password });
-    const { token } = data;
+    try {
+      const { data } = await api.post<UserLogIn>(ApiRoute.Login, { email, password });
+      const { token } = data;
 
-    saveToken(token);
-    dispatch(redirectToRoute(AppRoute.Main));
+      saveToken(token);
+      dispatch(redirectToRoute(AppRoute.Main));
 
-    return data;
+      return data;
+    } catch (error) {
+      throw new Error();
+    }
   },
 );
 
@@ -111,7 +115,7 @@ export const fetchReviewsAction = createAsyncThunk<Reviews, number | string | un
     return data;
   });
 
-export const submitCommentAction = createAsyncThunk<Review, Comments, {
+export const submitReviewsAction = createAsyncThunk<Review, Comments, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -134,9 +138,15 @@ export const fetchFavoritesAction = createAsyncThunk<Offers, undefined, {
 }>(
   'data/fetchFavorites',
   async (_arg, { extra: api }) => {
-    const { data } = await api.get<Offers>(ApiRoute.Favorite);
+    
+    try {
+      const { data } = await api.get<Offers>(ApiRoute.Favorite);
 
-    return data;
+      return data;
+
+    } catch (error) {
+      throw new Error();
+    }
   },
 );
 

@@ -177,10 +177,18 @@ export enum NameSpace {
   Error = 'ERROR'
 }
 
-
 export enum FavoritesUpdate {
   Offers = 'UpdateOffers',
   Offer = 'UpdateOffer',
   Favorites = 'UpdateFavorites',
   NearOffers = 'UpdateNearOffers',
+}
+
+export const getRandomInteger = (min: number, max:number) => Math.floor(Math.random() * (max - min));
+
+export enum RequestStatus {
+  Idle = 'idle',
+  Pending = 'pending',
+  Success = 'success',
+  Error = 'error',
 }
