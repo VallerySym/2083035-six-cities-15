@@ -65,7 +65,6 @@ function MainPage(): JSX.Element {
         )}
       </main>
     </div>
-
   );
 }
 

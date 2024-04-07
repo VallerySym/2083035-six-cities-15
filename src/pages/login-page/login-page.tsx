@@ -8,7 +8,6 @@ import { AppRoute, citiesList, getRandomInteger, AuthorizationStatus } from '../
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import { setCityActive, getOffers, setChangeMap } from '../../store/offers-process/offers-process.slice';
 
-
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);

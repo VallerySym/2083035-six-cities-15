@@ -74,5 +74,4 @@ function FavoriteCard({ offerCard }: FavoriteCardProps): JSX.Element {
   );
 }
 
-
 export default FavoriteCard;

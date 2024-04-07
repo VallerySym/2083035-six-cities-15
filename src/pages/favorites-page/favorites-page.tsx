@@ -7,7 +7,6 @@ import FavoritesEmptyPage from '../favorites-empty-page/favorites-empty-page';
 import { getFavorites, getFavoritesIsLoading, getFavoritesIsNotFound } from '../../store/favorites-process/favorites-process.selectors';
 import FavoriteCardList from '../../components/favorite-card-list/favorite-card-list';
 
-
 function FavotitesPage(): JSX.Element {
   const favoriteCards = useAppSelector(getFavorites);
   const favoritesIsLoading = useAppSelector(getFavoritesIsLoading);
