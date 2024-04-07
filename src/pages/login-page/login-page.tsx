@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { useRef, FormEvent, useEffect } from 'react';
+import { useRef, FormEvent, useEffect, useState, ChangeEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
@@ -7,6 +7,24 @@ import Logo from '../../components/logo/logo';
 import { AppRoute, citiesList, getRandomInteger, AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import { setCityActive, getOffers, setChangeMap } from '../../store/offers-process/offers-process.slice';
+import { AuthData } from '../../types/auth-data';
+
+const validateEmail = (email: string): boolean =>
+  /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i.test(email);
+
+const validatePassword = (password: string): boolean =>
+  /^[A-za-z0-9_]+[A-za-z0-9_]{1,}$/.test(password);
+
+const validate = (formData: AuthData): boolean => {
+  if (!validateEmail(formData.login)) {
+    return false;
+  }
+  if (!validatePassword(formData.password)) {
+    return false;
+  }
+
+  return true;
+};
 
 
 function LoginPage(): JSX.Element {
@@ -35,6 +53,22 @@ function LoginPage(): JSX.Element {
     dispatch(getOffers());
     dispatch(setChangeMap());
   }
+
+  const [isSubmitButtonOk, setIsSubmitButtonOk] = useState(false);
+  const [formData, setFormData] = useState<AuthData>({
+    login: '',
+    password: '',
+  });
+
+  const handleTextChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target;
+    setFormData({ ...formData, [name]: value });
+    if (validate({ ...formData, [name]: value })) {
+      setIsSubmitButtonOk(true);
+    } else {
+      setIsSubmitButtonOk(false);
+    }
+  };
 
   useEffect(() => {
     if (authStatus === AuthorizationStatus.Auth) {
@@ -65,9 +99,11 @@ function LoginPage(): JSX.Element {
                 <label className="visually-hidden">E-mail</label>
                 <input
                   className="login__input form__input"
+                  onChange={handleTextChange}
+                  value={formData.login}
                   ref={loginRef}
                   type="email"
-                  name="email"
+                  name="login"
                   id="email"
                   placeholder="Email"
                   required
@@ -77,6 +113,8 @@ function LoginPage(): JSX.Element {
                 <label className="visually-hidden">Password</label>
                 <input
                   className="login__input form__input"
+                  onChange={handleTextChange}
+                  value={formData.password}
                   ref={passwordRef}
                   type="password"
                   name="password"
@@ -88,6 +126,7 @@ function LoginPage(): JSX.Element {
               <button
                 className="login__submit form__submit button"
                 type="submit"
+                disabled={!isSubmitButtonOk}
               >
                 Sign in
               </button>
