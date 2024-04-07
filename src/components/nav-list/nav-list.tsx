@@ -18,7 +18,7 @@ function NavList(): JSX.Element {
 
   const handleClick = () => {
     dispatch(logoutAction());
-    dispatch(setAuthorizationStatusByDefault())
+    dispatch(setAuthorizationStatusByDefault());
   };
 
   return (

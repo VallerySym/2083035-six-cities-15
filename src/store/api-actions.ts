@@ -138,7 +138,7 @@ export const fetchFavoritesAction = createAsyncThunk<Offers, undefined, {
 }>(
   'data/fetchFavorites',
   async (_arg, { extra: api }) => {
-    
+
     try {
       const { data } = await api.get<Offers>(ApiRoute.Favorite);
 

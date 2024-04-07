@@ -27,7 +27,7 @@ function LocationsList({ cityActive }: LocationsListProps): JSX.Element {
               <li key={keyValue} className="locations__item">
                 <Link
                   className={`locations__item-link tabs__item ${city === cityActive ? 'tabs__item--active' : ''}`}
-                  onClick={() => changeCity(city)} 
+                  onClick={() => changeCity(city)}
                   to={AppRoute.Main}
                 >
                   <span>{city}</span>

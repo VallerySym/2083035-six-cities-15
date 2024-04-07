@@ -10,7 +10,7 @@ describe('Component: Map', () => {
     const mockMapType = 'cities';
     const expectedTestId = 'map';
 
-    render(<Map mapType={mockMapType} offers={mockCards} city={mockCity}  />);
+    render(<Map mapType={mockMapType} offers={mockCards} city={mockCity} />);
 
     expect(screen.getByTestId(expectedTestId)).toBeInTheDocument();
   });

@@ -2,6 +2,7 @@ import { makeFakeReviews } from '../../utils/mocks';
 import { NameSpace } from '../../const';
 import { ReviewsProcess } from '../../types/state';
 import { getReviews, getReviewsIsLoading, getReviewsIsNotFound } from './reviews-process.selectors';
+import { RequestStatus } from '../../const';
 
 const fakeReview = makeFakeReviews();
 
@@ -9,6 +10,7 @@ const fakeState: ReviewsProcess = {
   reviews: fakeReview,
   reviewsIsLoading: true,
   reviewsIsNotFound: false,
+  reviewRequestStatus: RequestStatus.Idle,
 };
 
 let state = { [NameSpace.Reviews]: fakeState };

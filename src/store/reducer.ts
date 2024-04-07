@@ -6,7 +6,7 @@ import { reviews } from './reviews-process/reviews-process.slice';
 import { nearOffers } from './near-offers-process/near-offers-process.slice';
 import { user } from './user-process/user-process.slice';
 import { favorites } from './favorites-process/favorites-process.slice';
-import { error } from './error-message-process/error-message-process.slice';
+import { errorMessage } from './error-message-process/error-message-process.slice';
 
 export const rootReducer = combineReducers({
   [NameSpace.Offers]: offers.reducer,
@@ -15,5 +15,5 @@ export const rootReducer = combineReducers({
   [NameSpace.Reviews]: reviews.reducer,
   [NameSpace.NearOffers]: nearOffers.reducer,
   [NameSpace.Favorites]: favorites.reducer,
-  [NameSpace.Error]: error.reducer,
+  [NameSpace.Error]: errorMessage.reducer,
 });
