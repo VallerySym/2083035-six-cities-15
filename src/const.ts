@@ -9,8 +9,6 @@ export enum AppRoute {
   NotFound = '*',
 }
 
-export const PRIVATE_ROUTES: readonly string[] = ['/favorites'];
-
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',

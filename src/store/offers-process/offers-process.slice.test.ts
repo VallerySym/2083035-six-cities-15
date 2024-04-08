@@ -12,13 +12,7 @@ const initialState: OffersProcess = {
   offersIsNotFound: false,
 };
 
-let state: OffersProcess;
-
 describe('Slice offers-process', () => {
-
-  beforeEach(() => {
-    state = { ...initialState };
-  });
 
   it('should return initial state with empty action ', () => {
     const emptyAction = { type: '' };
